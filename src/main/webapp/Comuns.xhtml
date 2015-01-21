@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<h:head>
+		<title>Propriedades comuns</title>
+		
+		<style>
+			.campo {
+				background-color: blue;
+				color: white;
+				font-weight: bold;
+			}
+		</style>
+		
+		<script>
+			function alterarValorCampo() {
+				var campo = document.getElementById('meuForm:meuCampo');
+				campo.value = 'novo xxxx';
+			}
+		</script>
+	</h:head>
+	
+	<h:body>
+		<h:graphicImage library="imagens" name="alga.jpg"/>
+		<h:form id="meuForm">
+			<h:messages showSummary="true" showDetail="true" infoStyle="color: blue"/>			
+						
+			<h:inputText id="meuCampo" styleClass="campo"/>
+			<input type="button" value="Alterar valor" onclick="alterarValorCampo()"/>
+			<br/>
+			<h:selectOneMenu value="#{cadastroTorcedorBean.timeFavorito}">
+				<f:selectItem itemValue="Corinthians"/>
+				<f:selectItem itemValue="Palmeiras"/>
+				<f:selectItem itemValue="São Paulo"/>
+				<f:selectItem itemValue="Santos"/>				
+			</h:selectOneMenu>
+			<br/>
+			<h:commandButton value="Mostrar item selecionado" action="#{cadastroTorcedorBean.mostrarSelecionado}"/>
+		</h:form>
+	</h:body>
+</html>
