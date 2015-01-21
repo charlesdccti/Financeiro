@@ -33,18 +33,71 @@
 					</p:column>
 						
 					<p:column>
-						<p:button icon="ui-icon-pencil" title="Editar" outcome="CadastroPessoa">
+						<p:button value="Editar página" icon="ui-icon-pencil" title="Editar" outcome="CadastroPessoa">
+							<f:param name="id" value="#{pessoa.id}"/>
+						</p:button>
+
+						<p:commandButton
+							value="Editar Dialog"
+							icon="ui-icon-pencil"
+							title="Editar"
+							oncomplete="PF('editar').show()"
+							update=":editar">
+							<f:setPropertyActionListener value="#{pessoa}" target="#{cadastroPessoaBean.pessoa}"/>
+						</p:commandButton>
+
+						<p:button value="Excluir página" icon="ui-icon-trash" title="Excluir" outcome="ConfirmaExclusao">
 							<f:param name="id" value="#{pessoa.id}"/>
 						</p:button>
 						
-						<p:commandButton icon="ui-icon-trash" action="#{consultaPessoasBean.excluir}" update="@form" title="Excluir">
+						<p:commandButton
+							value="Excluir Dialog"
+							icon="ui-icon-trash"
+							title="Excluir"
+							oncomplete="PF('confirmacao').show()"
+							update=":confirmacao">
+							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"/>
+						</p:commandButton>
+						
+						<p:commandButton value="Excluir direto" icon="ui-icon-trash" action="#{consultaPessoasBean.excluir}" update="@form" title="Excluir">
 							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"/>						
 						</p:commandButton>
+						
 					</p:column>
-					
+
 				</p:dataTable>
-					
+				
 			</h:form>
+			
+			<p:confirmDialog id="confirmacao"
+				widgetVar="confirmacao"
+				message="Confirma a exclusão da pessoa [#{consultaPessoasBean.pessoaSelecionada.nome}] ?"
+				header="Exclusão de pessoas"
+				severity="alert">
+				<h:form>	
+					<p:commandButton value="Sim" oncomplete="PF('confirmacao').hide()" actionListener="#{consultaPessoasBean.excluir}" update=":frm"/>
+					<p:commandButton value="Não" oncomplete="PF('confirmacao').hide()" />
+				</h:form>	
+			</p:confirmDialog>
+			
+			<p:dialog id="editar"
+				widgetVar="editar"
+				modal="true"
+				header="Alteração de Pessoa"
+				resizable="false">
+				<h:form>
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Nome" for="nome"/>
+						<p:inputText id="nome" value="#{cadastroPessoaBean.pessoa.nome}"/>
+						<br/>
+						<h:panelGroup>
+							<p:commandButton value="Salvar" oncomplete="PF('editar').hide()"
+								actionListener="#{cadastroPessoaBean.salvar}" update=":frm"/>
+							<p:commandButton value="Fechar" oncomplete="PF('editar').hide()" />
+						</h:panelGroup>								
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
 			
 		</ui:define>
 			

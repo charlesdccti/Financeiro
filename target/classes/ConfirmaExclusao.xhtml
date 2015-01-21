@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/Layout.xhtml">
+ 
+	<f:metadata>
+		<o:viewParam name="id" value="#{consultaPessoasBean.pessoaSelecionada}"/>		
+	</f:metadata>
+
+	<ui:define name="titulo">Exclusão de Pessoa</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form>
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" />
+
+			<h1>Exclusão de Pessoa</h1>
+
+			<br />
+			
+		    <h:outputFormat value="Confirma a exclusão da pessoa {0} ?">
+				<f:param value="#{consultaPessoasBean.pessoaSelecionada.nome}"/>
+			</h:outputFormat>
+
+			<br />
+			<br />
+			
+			<h:panelGroup>
+				<p:commandButton value="Sim" action="#{consultaPessoasBean.excluir}" />
+				<p:commandButton value="Não" action="ConsultaPessoas?faces-redirect=true" />
+			</h:panelGroup>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
+

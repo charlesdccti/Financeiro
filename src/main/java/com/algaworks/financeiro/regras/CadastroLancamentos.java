@@ -20,12 +20,14 @@ public class CadastroLancamentos implements Serializable {
 	public void salvar(Lancamento lancamento) throws NegocioException {
 
 		if (lancamento.getDataPagamento() != null && lancamento.getDataPagamento().after(Calendar.getInstance().getTime())) {
+			lancamento.setDataPagamento(null);
 			throw new NegocioException("Data de pagamento não pode ser uma data futura.");
 		}
 		
 		this.lancamentos.guardar(lancamento);
 	}
 	
+	@Transactional
 	public void excluir(Lancamento lancamento) throws NegocioException {
 		lancamento = this.lancamentos.porId(lancamento.getId());
 		

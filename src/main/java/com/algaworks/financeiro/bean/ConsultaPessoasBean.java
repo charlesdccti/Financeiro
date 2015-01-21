@@ -31,15 +31,17 @@ public class ConsultaPessoasBean implements Serializable {
 		return this.pessoas;
 	}
 	
-	public void excluir() {
+	public String excluir() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		try {
 			pessoasRepository.remover(this.pessoaSelecionada);
 			this.consultar();
 			context.addMessage(null, new FacesMessage("Pessoa excluída com sucesso."));
+			return "ConsultaPessoas?faces-redirect=true";
 		} catch (Exception e) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+			return null;
 		}
 	}
 

@@ -39,7 +39,7 @@ public class ConsultaLancamentosBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		try {
-			cadastro.excluir(this.getLancamentoSelecionado());
+			cadastro.excluir(this.lancamentoSelecionado);
 			this.consultar();
 			context.addMessage(null, new FacesMessage("Lançamento excluído com sucesso."));
 		} catch (NegocioException e) {

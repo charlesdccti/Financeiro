@@ -42,4 +42,5 @@ public class CadastroPessoaBean implements Serializable {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
 }
