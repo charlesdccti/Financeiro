@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.algaworks.financeiro.model.Usuario;
 
-@WebFilter("*.xhtml")
+//@WebFilter("*.xhtml")
 public final class AutorizacaoFilter implements Filter {
 	
 	@Inject
@@ -23,7 +23,6 @@ public final class AutorizacaoFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -45,7 +44,6 @@ public final class AutorizacaoFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
 
 	}
 

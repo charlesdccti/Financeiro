@@ -4,7 +4,7 @@
   <artifactId>Financeiro</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-	  
+  
   <!-- Configura o projeto para usar a codificação UTF-8 -->  
   <properties>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
@@ -22,7 +22,7 @@
 			</configuration>  			
   	  	</plugin>
   	</plugins>
-  </build>
+  </build>  
   
   <!-- Dependência API Servlets -->
   <dependencies>
@@ -97,6 +97,6 @@
 		<scope>compile</scope>
 	</dependency>	
 	
-  </dependencies>
+  </dependencies>  
   
 </project>
