@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/WEB-INF/template/Layout.xhtml">	
+
+        <f:metadata>
+            <f:viewAction action="#{consultaLancamentosBean.consultar}"></f:viewAction>
+        </f:metadata>
+
+        <ui:define name="titulo">Consulta de Lançamentos</ui:define>
+
+        <ui:define name="corpo">
+
+            <h1>Consulta de lançamentos</h1>
+
+            <h:form id="frm">
+
+                <p:messages showDetail="false" showSummary="true" autoUpdate="true"/>
+
+                <p:dataTable
+                    value="#{consultaLancamentosBean.lancamentos}"
+                    var="lancamento"
+                    paginator="true"
+                    paginatorPosition="bottom"
+                    rows="8">
+
+                    <p:column headerText="Pessoa" sortBy="#{lancamento.pessoa.nome}">
+                        <h:outputText value="#{lancamento.pessoa.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="Descrição" sortBy="#{lancamento.descricao}">
+                        <h:outputText value="#{lancamento.descricao}"/>
+                    </p:column>
+
+                    <p:column headerText="Tipo" sortBy="#{lancamento.tipo.descricao}">
+                        <h:outputText value="#{lancamento.tipo}"/>
+                    </p:column>
+
+                    <p:column headerText="Valor" sortBy="#{lancamento.valor}" style="text-align: right">
+                        <h:outputText value="#{lancamento.valor}">
+                            <f:convertNumber type="currency" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Data de vencimento" sortBy="#{lancamento.dataVencimento}" style="text-align: center">
+                        <h:outputText value="#{lancamento.dataVencimento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Data de pagamento" sortBy="#{lancamento.dataPagamento}" style="text-align: center">
+                        <h:outputText value="#{lancamento.dataPagamento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <p:button icon="ui-icon-pencil" title="Editar" outcome="CadastroLancamento">
+                            <f:param name="id" value="#{lancamento.id}"/>
+                        </p:button>
+
+                        <p:commandButton value="Editar dialog" icon="ui-icon-pencil" actionListener="#{cadastroLancamentoBean.prepararCadastro}"
+                                         oncomplete="PF('editar').show()" update=":editar" title="Editar">
+                            <f:setPropertyActionListener value="#{lancamento}" target="#{cadastroLancamentoBean.lancamento}"/>						
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-trash" oncomplete="PF('confirmacao').show()" update=":confirmacao" title="Excluir">
+                            <f:setPropertyActionListener value="#{lancamento}" target="#{consultaLancamentosBean.lancamentoSelecionado}"/>						
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+            <p:confirmDialog id="confirmacao"
+                             message="Confirma a exclusão do lançamento [#{consultaLancamentosBean.lancamentoSelecionado.descricao}] ?"
+                             severity="alert"
+                             widgetVar="confirmacao"
+                             header="Exclusão de Lançamentos">
+                <h:form>
+                    <p:commandButton value="Sim" oncomplete="PF('confirmacao').hide()" actionListener="#{consultaLancamentosBean.excluir}" update=":frm" />
+                    <p:commandButton value="Não" oncomplete="PF('confirmacao').hide()" />
+                </h:form>
+            </p:confirmDialog>
+
+            <p:dialog id="editar"
+                      widgetVar="editar"
+                      modal="true"
+                      header="Alteração de Lançamento"
+                      resizable="false">
+                <h:form>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Tipo" for="tipo"/>
+                        <p:selectOneButton id="tipo" value="#{cadastroLancamentoBean.lancamento.tipo}">
+                            <f:selectItems
+                                value="#{cadastroLancamentoBean.tipoLancamentos}"
+                                var="tipoLancamento"
+                                itemValue="#{tipoLancamento}"
+                                itemLabel="#{tipoLancamento.descricao}"/>
+                        </p:selectOneButton>
+
+                        <p:outputLabel value="Pessoa" for="pessoa"/>
+                        <p:selectOneMenu
+                            id="pessoa"
+                            value="#{cadastroLancamentoBean.lancamento.pessoa}"
+                            label="Pessoa"
+                            filter="true"
+                            filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+                            <f:selectItems
+                                value="#{cadastroLancamentoBean.todasPessoas}"
+                                var="pessoa"
+                                itemValue="#{pessoa}"
+                                itemLabel="#{pessoa.nome}">
+                            </f:selectItems>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Descrição" for="descricao"/>
+                        <p:autoComplete
+                            id="descricao"
+                            value="#{cadastroLancamentoBean.lancamento.descricao}"
+                            size="60"
+                            completeMethod="#{cadastroLancamentoBean.pesquisarDescricoes}"/>
+
+                        <p:outputLabel value="Valor" for="valor"/>
+                        <p:inputText id="valor" value="#{cadastroLancamentoBean.lancamento.valor}" size="12" styleClass="moeda"/>
+
+                        <p:outputLabel value="Data de vencimento" for="dataVencimento"/>
+                        <p:calendar id="dataVencimento" value="#{cadastroLancamentoBean.lancamento.dataVencimento}" pattern="dd/MM/yyyy"
+                                    readonlyInput="true" />
+
+                        <p:outputLabel value="Data de pagamento" for="dataPagamento"/>
+                        <p:calendar id="dataPagamento" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" pattern="dd/MM/yyyy" 
+                                    readonlyInput="true"/>
+
+                        <h:panelGroup>
+                            <p:commandButton value="Salvar" oncomplete="PF('editar').hide()" action="#{cadastroLancamentoBean.salvar}" update=":frm"/>
+                            <p:commandButton value="Fechar" oncomplete="PF('editar').hide()" />							
+                        </h:panelGroup>	
+
+                    </p:panelGrid>				
+                </h:form>
+
+            </p:dialog>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

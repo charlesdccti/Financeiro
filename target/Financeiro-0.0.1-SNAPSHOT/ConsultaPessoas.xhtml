@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/WEB-INF/template/Layout.xhtml">	
+	
+		<f:metadata>
+			<f:viewAction action="#{consultaPessoasBean.consultar}"></f:viewAction>
+		</f:metadata>
+			
+		<ui:define name="titulo">Consulta de Pessoas</ui:define>
+			
+		<ui:define name="corpo">
+			
+			<h1>Consulta de Pessoas</h1>
+				
+			<h:form id="frm">
+				<p:messages showDetail="false" showSummary="true" autoUpdate="true"/>
+					
+				<p:dataTable
+					value="#{consultaPessoasBean.pessoas}"
+					var="pessoa"
+					paginator="true"
+					paginatorPosition="bottom"
+					rows="8">
+						
+					<p:column headerText="Nome" sortBy="#{pessoa.nome}">
+						<h:outputText value="#{pessoa.nome}"/>
+					</p:column>
+						
+					<p:column>
+						<p:button value="Editar página" icon="ui-icon-pencil" title="Editar" outcome="CadastroPessoa">
+							<f:param name="id" value="#{pessoa.id}"/>
+						</p:button>
+
+						<p:commandButton
+							value="Editar Dialog"
+							icon="ui-icon-pencil"
+							title="Editar"
+							oncomplete="PF('editar').show()"
+							update=":editar">
+							<f:setPropertyActionListener value="#{pessoa}" target="#{cadastroPessoaBean.pessoa}"/>
+						</p:commandButton>
+
+						<p:button value="Excluir página" icon="ui-icon-trash" title="Excluir" outcome="ConfirmaExclusao">
+							<f:param name="id" value="#{pessoa.id}"/>
+						</p:button>
+						
+						<p:commandButton
+							value="Excluir Dialog"
+							icon="ui-icon-trash"
+							title="Excluir"
+							oncomplete="PF('confirmacao').show()"
+							update=":confirmacao">
+							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"/>
+						</p:commandButton>
+						
+						<p:commandButton value="Excluir direto" icon="ui-icon-trash" action="#{consultaPessoasBean.excluir}" update="@form" title="Excluir">
+							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"/>						
+						</p:commandButton>
+						
+					</p:column>
+
+				</p:dataTable>
+				
+			</h:form>
+			
+			<p:confirmDialog id="confirmacao"
+				widgetVar="confirmacao"
+				message="Confirma a exclusão da pessoa [#{consultaPessoasBean.pessoaSelecionada.nome}] ?"
+				header="Exclusão de pessoas"
+				severity="alert">
+				<h:form>	
+					<p:commandButton value="Sim" oncomplete="PF('confirmacao').hide()" actionListener="#{consultaPessoasBean.excluir}" update=":frm"/>
+					<p:commandButton value="Não" oncomplete="PF('confirmacao').hide()" />
+				</h:form>	
+			</p:confirmDialog>
+			
+			<p:dialog id="editar"
+				widgetVar="editar"
+				modal="true"
+				header="Alteração de Pessoa"
+				resizable="false">
+				<h:form>
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Nome" for="nome"/>
+						<p:inputText id="nome" value="#{cadastroPessoaBean.pessoa.nome}"/>
+						<br/>
+						<h:panelGroup>
+							<p:commandButton value="Salvar" oncomplete="PF('editar').hide()"
+								actionListener="#{cadastroPessoaBean.salvar}" update=":frm"/>
+							<p:commandButton value="Fechar" oncomplete="PF('editar').hide()" />
+						</h:panelGroup>								
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+			
+		</ui:define>
+			
+	</ui:composition>
+	
+</html>

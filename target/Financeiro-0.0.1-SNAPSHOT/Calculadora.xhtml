@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+	
+	<h:head>
+		<title>Calculadora</title>
+	</h:head>
+	
+	<h:body>
+		<h:form id="frm">
+			<h:messages />
+			
+			<h:outputLabel value="Seu nome:" for="seuNome"/>
+			<h:inputText
+				id="seuNome"
+				size="12"
+				label="Seu nome"
+				required="true"
+				requiredMessage="O nome é obrigatório"
+				validatorMessage="Informe o nome de 2 a 12 caracteres caramba">
+				<f:validateLength minimum="2" maximum="12"/>
+			</h:inputText>
+			<br/>
+			
+			<h:inputText size="12" value="#{calculadoraBean.valorA}" label="Valor A" required="true">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="pt_BR"/>
+			</h:inputText>
+			 +
+			<h:inputText size="12" value="#{calculadoraBean.valorB}" label="Valor B" required="true">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="pt_BR"/>			
+			</h:inputText>
+			 =
+			<h:outputText value="#{calculadoraBean.resultado}">
+				<f:convertNumber type="currency" locale="pt_BR"/>
+			</h:outputText>
+			<br />
+			<h:commandButton value="Somar" action="#{calculadoraBean.somar}" />
+		</h:form>
+	</h:body>
+</html>
+

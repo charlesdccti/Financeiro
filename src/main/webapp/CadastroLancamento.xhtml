@@ -1,101 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:o="http://omnifaces.org/ui">
-	
-	<ui:composition template="/WEB-INF/template/Layout.xhtml">
-	
-		<f:metadata>
-			<o:viewParam name="id" value="#{cadastroLancamentoBean.lancamento}"/>
-			<f:viewAction action="#{cadastroLancamentoBean.prepararCadastro}"/>
-		</f:metadata>
-		
-		<ui:define name="titulo">Cadastro de Lançamentos</ui:define>
-		
-		<ui:define name="corpo">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
 
-			<h1>Cadastro de Lançamentos</h1>
-			
-			<h:form>
-				<p:messages showDetail="false" showSummary="true" autoUpdate="true"/>
-				
-				<p:panelGrid columns="2">
+    <ui:composition template="/WEB-INF/template/Layout.xhtml">
 
-					<p:outputLabel value="Tipo" for="tipo"/>
-					<p:selectOneButton id="tipo" value="#{cadastroLancamentoBean.lancamento.tipo}">
-						<f:selectItems
-							value="#{cadastroLancamentoBean.tipoLancamentos}"
-							var="tipoLancamento"
-							itemValue="#{tipoLancamento}"
-							itemLabel="#{tipoLancamento.descricao}"/>
-					</p:selectOneButton>
-					
-					<p:outputLabel value="Pessoa" for="pessoa"/>
-					<p:selectOneMenu
-						id="pessoa"
-						value="#{cadastroLancamentoBean.lancamento.pessoa}"
-						label="Pessoa"
-						filter="true"
-						filterMatchMode="contains">
-						<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
-						<f:selectItems
-							value="#{cadastroLancamentoBean.todasPessoas}"
-							var="pessoa"
-							itemValue="#{pessoa}"
-							itemLabel="#{pessoa.nome}">
-						</f:selectItems>
-					</p:selectOneMenu>
-					
-					<p:outputLabel value="Descrição" for="descricao"/>
-					<p:autoComplete
-						id="descricao"
-						value="#{cadastroLancamentoBean.lancamento.descricao}"
-						size="60"
-						completeMethod="#{cadastroLancamentoBean.pesquisarDescricoes}"/>
-					
-					<p:outputLabel value="Valor" for="valor"/>
-					<p:inputText id="valor" value="#{cadastroLancamentoBean.lancamento.valor}" size="12" onkeyup="formataValor(this, event)">
-						<f:convertNumber locale="pt_BR" minFractionDigits="2" maxFractionDigits="2"/>
-					</p:inputText>
-					
-					<p:outputLabel value="Data de vencimento" for="dataVencimento"/>
-					<p:calendar id="dataVencimento" value="#{cadastroLancamentoBean.lancamento.dataVencimento}" pattern="dd/MM/yyyy">
-						<p:ajax
-							event="dateSelect"
-							listener="#{cadastroLancamentoBean.dataVencimentoAlterada}"
-							update="@this dataPagamento"
-							process="@this dataPagamento"/>
-						<p:ajax
-							event="change"
-							listener="#{cadastroLancamentoBean.dataVencimentoAlterada}"
-							update="@this dataPagamento"
-							process="@this dataPagamento"/>							
-					</p:calendar>
-					
-					<p:outputLabel value="Data de pagamento" for="dataPagamento"/>
-					<p:calendar id="dataPagamento" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" pattern="dd/MM/yyyy"/>
+        <f:metadata>
+            <o:viewParam name="id" value="#{cadastroLancamentoBean.lancamento}"/>
+            <f:viewAction action="#{cadastroLancamentoBean.prepararCadastro}"/>
+        </f:metadata>
 
-					<p:commandButton value="Salvar" action="#{cadastroLancamentoBean.salvar}" icon="ui-icon-disk" update="@form"/>
-				
-				</p:panelGrid>
-			
-			</h:form>
-		
-		</ui:define>
-	
-	</ui:composition>
-	
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Insert title here</title>
-</h:head>
+        <ui:define name="titulo">Cadastro de Lançamentos</ui:define>
 
-<body>
+        <ui:define name="corpo">
 
-</body>
+            <h1>Cadastro de Lançamentos</h1>
+
+            <h:form>
+                <p:messages showDetail="false" showSummary="true" autoUpdate="true"/>
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Tipo" for="tipo"/>
+                    <p:selectOneButton id="tipo" value="#{cadastroLancamentoBean.lancamento.tipo}">
+                        <f:selectItems
+                            value="#{cadastroLancamentoBean.tipoLancamentos}"
+                            var="tipoLancamento"
+                            itemValue="#{tipoLancamento}"
+                            itemLabel="#{tipoLancamento.descricao}"/>
+                    </p:selectOneButton>
+
+                    <p:outputLabel value="Pessoa" for="pessoa"/>
+                    <p:selectOneMenu
+                        id="pessoa"
+                        value="#{cadastroLancamentoBean.lancamento.pessoa}"
+                        label="Pessoa"
+                        filter="true"
+                        filterMatchMode="contains">
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+                        <f:selectItems
+                            value="#{cadastroLancamentoBean.todasPessoas}"
+                            var="pessoa"
+                            itemValue="#{pessoa}"
+                            itemLabel="#{pessoa.nome}">
+                        </f:selectItems>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Descrição" for="descricao"/>
+                    <p:autoComplete
+                        id="descricao"
+                        value="#{cadastroLancamentoBean.lancamento.descricao}"
+                        size="60"
+                        completeMethod="#{cadastroLancamentoBean.pesquisarDescricoes}"/>
+
+                    <p:outputLabel value="Valor" for="valor"/>
+                    <p:inputText id="valor" value="#{cadastroLancamentoBean.lancamento.valor}" size="12" styleClass="moeda"/>
+
+                    <p:outputLabel value="Data de vencimento" for="dataVencimento"/>
+                    <p:calendar id="dataVencimento" value="#{cadastroLancamentoBean.lancamento.dataVencimento}" pattern="dd/MM/yyyy">
+                        <p:ajax
+                            event="dateSelect"
+                            listener="#{cadastroLancamentoBean.dataVencimentoAlterada}"
+                            update="@this dataPagamento"
+                            process="@this dataPagamento"/>
+                        <p:ajax
+                            event="change"
+                            listener="#{cadastroLancamentoBean.dataVencimentoAlterada}"
+                            update="@this dataPagamento"
+                            process="@this dataPagamento"/>							
+                    </p:calendar>
+
+                    <p:outputLabel value="Data de pagamento" for="dataPagamento"/>
+                    <p:calendar id="dataPagamento" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" pattern="dd/MM/yyyy"/>
+
+                    <p:commandButton value="Salvar" action="#{cadastroLancamentoBean.salvar}" icon="ui-icon-disk" update="@form"/>
+
+                </p:panelGrid>
+
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
 
 </html>
