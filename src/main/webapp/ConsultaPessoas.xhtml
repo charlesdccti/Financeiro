@@ -19,83 +19,76 @@
 			<h1>Consulta de Pessoas</h1>
 				
 			<h:form id="frm">
-				<p:messages showDetail="false" showSummary="true" autoUpdate="true"/>
+				
+				<script>
+					function tratarSalvar(args) {
+						if (!args.validationFailed) {
+							PF('editar').hide();
+						}
+					}
+				</script>
+
+				<p:dataTable value="#{consultaPessoasBean.pessoas}" var="pessoa" 
+					paginator="true" paginatorPosition="bottom" rows="8">
 					
-				<p:dataTable
-					value="#{consultaPessoasBean.pessoas}"
-					var="pessoa"
-					paginator="true"
-					paginatorPosition="bottom"
-					rows="8">
-						
 					<p:column headerText="Nome" sortBy="#{pessoa.nome}">
 						<h:outputText value="#{pessoa.nome}"/>
 					</p:column>
 						
-					<p:column>
-						<p:button value="Editar página" icon="ui-icon-pencil" title="Editar" outcome="CadastroPessoa">
-							<f:param name="id" value="#{pessoa.id}"/>
-						</p:button>
-
-						<p:commandButton
-							value="Editar Dialog"
-							icon="ui-icon-pencil"
-							title="Editar"
-							oncomplete="PF('editar').show()"
+					<p:column style="width: 70px">
+						<p:commandButton icon="ui-icon-pencil" title="Editar" oncomplete="PF('editar').show()"
 							update=":editar">
 							<f:setPropertyActionListener value="#{pessoa}" target="#{cadastroPessoaBean.pessoa}"/>
+							<p:resetInput target=":editar"/>
 						</p:commandButton>
 
-						<p:button value="Excluir página" icon="ui-icon-trash" title="Excluir" outcome="ConfirmaExclusao">
-							<f:param name="id" value="#{pessoa.id}"/>
-						</p:button>
-						
-						<p:commandButton
-							value="Excluir Dialog"
-							icon="ui-icon-trash"
-							title="Excluir"
-							oncomplete="PF('confirmacao').show()"
+						<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacao').show()"
 							update=":confirmacao">
 							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"/>
 						</p:commandButton>
-						
-						<p:commandButton value="Excluir direto" icon="ui-icon-trash" action="#{consultaPessoasBean.excluir}" update="@form" title="Excluir">
-							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"/>						
-						</p:commandButton>
-						
 					</p:column>
-
 				</p:dataTable>
-				
 			</h:form>
 			
-			<p:confirmDialog id="confirmacao"
-				widgetVar="confirmacao"
-				message="Confirma a exclusão da pessoa [#{consultaPessoasBean.pessoaSelecionada.nome}] ?"
-				header="Exclusão de pessoas"
-				severity="alert">
+			<p:confirmDialog id="confirmacao" widgetVar="confirmacao" header="Exclusão de pessoas"
+				message="Confirma a exclusão da pessoa [#{consultaPessoasBean.pessoaSelecionada.nome}] ?" severity="alert">
 				<h:form>	
 					<p:commandButton value="Sim" oncomplete="PF('confirmacao').hide()" actionListener="#{consultaPessoasBean.excluir}" update=":frm"/>
 					<p:commandButton value="Não" oncomplete="PF('confirmacao').hide()" />
 				</h:form>	
 			</p:confirmDialog>
 			
-			<p:dialog id="editar"
-				widgetVar="editar"
-				modal="true"
-				header="Alteração de Pessoa"
-				resizable="false">
+			<p:dialog id="editar" widgetVar="editar" modal="true" header="Alteração de Pessoa" resizable="false">
 				<h:form>
-					<p:panelGrid columns="2">
-						<p:outputLabel value="Nome" for="nome"/>
-						<p:inputText id="nome" value="#{cadastroPessoaBean.pessoa.nome}"/>
-						<br/>
-						<h:panelGroup>
-							<p:commandButton value="Salvar" oncomplete="PF('editar').hide()"
-								actionListener="#{cadastroPessoaBean.salvar}" update=":frm"/>
+					<h:panelGroup id="panelEditar">
+						<p:messages/>
+					
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Nome" for="nome"/>
+							<p:inputText id="nome" value="#{cadastroPessoaBean.pessoa.nome}" size="70"/>
+							
+							<f:facet name="footer">
+								<p:row>
+									<p:column colspan="2">
+										<h:panelGroup style="float: right; padding: 3px">
+											<p:commandButton value="Salvar" oncomplete="tratarSalvar(args)"
+												actionListener="#{cadastroPessoaBean.salvar}" update=":frm panelEditar"/>
+											<p:commandButton value="Fechar" oncomplete="PF('editar').hide()" />
+										</h:panelGroup>
+									</p:column>
+								</p:row>
+							</f:facet>
+						</p:panelGrid>
+						
+						<p:separator rendered="false"/>
+						
+						<h:panelGroup style="float: right" rendered="false">
+							<p:commandButton value="Salvar" oncomplete="tratarSalvar(args)"
+								actionListener="#{cadastroPessoaBean.salvar}" update=":frm panelEditar"/>
 							<p:commandButton value="Fechar" oncomplete="PF('editar').hide()" />
 						</h:panelGroup>								
-					</p:panelGrid>
+						 						
+					</h:panelGroup>
 				</h:form>
 			</p:dialog>
 			

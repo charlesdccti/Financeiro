@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.algaworks.financeiro.model.Usuario;
 
-//@WebFilter("*.xhtml")
+@WebFilter("*.xhtml")
 public final class AutorizacaoFilter implements Filter {
 	
 	@Inject

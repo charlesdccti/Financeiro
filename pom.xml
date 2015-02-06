@@ -17,22 +17,15 @@
 	    	<artifactId>maven-compiler-plugin</artifactId>
 			<version>3.2</version>
 			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>		
+				<source>1.8</source>
+				<target>1.8</target>		
 			</configuration>  			
   	  	</plugin>
   	</plugins>
   </build>  
   
   <!-- Dependência API Servlets -->
-    <repositories>
-        <repository>
-            <id>unknown-jars-temp-repo</id>
-            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
-            <url>file:${project.basedir}/lib</url>
-        </repository>
-    </repositories>
-    <dependencies>
+  <dependencies>
   	<dependency>
   		<groupId>javax.servlet</groupId>
   		<artifactId>javax.servlet-api</artifactId>
@@ -52,7 +45,8 @@
 	<dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-entitymanager</artifactId>
-		<version>4.3.1.Final</version>
+		<version>4.3.8.Final</version>
+		<scope>compile</scope>
 	</dependency>
 	
 	<!-- Driver do PostgreSQL -->
@@ -101,13 +95,8 @@
 		<artifactId>omnifaces</artifactId>
 		<version>1.6</version>
 		<scope>compile</scope>
-	</dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>hibernate-jpamodelgen-4.3.1.Final</artifactId>
-            <version>SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>  
+	</dependency>	
+	
+  </dependencies>  
   
 </project>
