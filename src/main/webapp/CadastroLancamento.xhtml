@@ -26,10 +26,10 @@
 				<p:panelGrid columns="2">
 
 					<p:outputLabel value="Tipo" for="tipo"/>
-					<p:selectOneButton id="tipo" value="#{cadastroLancamentoBean.lancamento.tipo}">
+					<p:selectOneRadio id="tipo" value="#{cadastroLancamentoBean.lancamento.tipo}">
 						<f:selectItems value="#{cadastroLancamentoBean.tipoLancamentos}" var="tipoLancamento"
 							itemValue="#{tipoLancamento}" itemLabel="#{tipoLancamento.descricao}"/>
-					</p:selectOneButton>
+					</p:selectOneRadio>
 					
 					<p:outputLabel value="Pessoa" for="pessoa"/>
 					<p:selectOneMenu id="pessoa" value="#{cadastroLancamentoBean.lancamento.pessoa}" label="Pessoa"
@@ -60,13 +60,21 @@
 					
 					<p:outputLabel value="Data de pagamento" for="dataPagamento"/>
 					<p:calendar id="dataPagamento" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" pattern="dd/MM/yyyy"/>
-
-					<p:commandButton value="Salvar" action="#{cadastroLancamentoBean.salvar}" icon="ui-icon-disk" update="@form"/>
 				
+					<f:facet name="footer">
+						<p:row>
+							<p:column>
+								<h:panelGroup style="float: right; padding: 3px">
+									<p:commandButton value="Salvar" action="#{cadastroLancamentoBean.salvar}" icon="ui-icon-disk" update="@form"/>
+								</h:panelGroup>
+							</p:column>
+						</p:row>
+					</f:facet>
+
 				</p:panelGrid>
-			
+				
 			</h:form>
-		
+			
 		</ui:define>
 	
 	</ui:composition>

@@ -50,7 +50,6 @@ public class CadastroLancamentoBean implements Serializable {
 		
 		try {
 			cadastro.salvar(this.lancamento);
-			
 			context.addMessage(null, new FacesMessage("Lançamento salvo com sucesso."));
 		} catch (NegocioException e) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));

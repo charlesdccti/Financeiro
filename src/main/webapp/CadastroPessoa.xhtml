@@ -27,9 +27,15 @@
 					<p:outputLabel value="Nome" for="nome"/>
 					<p:inputText id="nome" value="#{cadastroPessoaBean.pessoa.nome}"/>
 					
-					<br/>
-					
-					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cadastroPessoaBean.salvar}" update="@form"/>
+					<f:facet name="footer">
+						<p:row>
+							<p:column>
+								<h:panelGroup style="float: right; padding: 3px">
+									<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cadastroPessoaBean.salvar}" update="@form"/>			
+								</h:panelGroup>
+							</p:column>
+						</p:row>
+					</f:facet>
 				
 				</p:panelGrid>
 			
