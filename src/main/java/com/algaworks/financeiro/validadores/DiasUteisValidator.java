@@ -25,7 +25,7 @@ public class DiasUteisValidator implements Validator {
 		int diaSemana = dataValidar.get(Calendar.DAY_OF_WEEK);
 		
 		if (diaSemana == Calendar.SATURDAY || diaSemana == Calendar.SUNDAY) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_FATAL, "Data inválida", "A data não é um dia útil."));
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_FATAL, "A data não é um dia útil.", ""));
 		}
 
 	}

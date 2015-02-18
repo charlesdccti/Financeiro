@@ -19,7 +19,7 @@
 		</script>
 
 		<h:panelGroup  id="panelEditar">
-			<p:messages />
+			<p:messages/>
 			
 			<p:panelGrid columns="2">
 			
@@ -43,13 +43,14 @@
 					completeMethod="#{cadastroLancamentoBean.pesquisarDescricoes}" />
 	
 				<p:outputLabel value="Valor" for="valor" />
-				<p:inputText id="valor" value="#{cadastroLancamentoBean.lancamento.valor}" size="12" styleClass="moeda">
+				<p:inputText id="valor" value="#{cadastroLancamentoBean.lancamento.valor}" size="12" styleClass="moeda"
+					validator="valorZero">
 					<f:convertNumber locale="pt_BR" minFractionDigits="2" maxFractionDigits="2" />
 				</p:inputText>
 	
 				<p:outputLabel value="Data de vencimento" for="dataVencimento" />
 				<p:calendar id="dataVencimento" value="#{cadastroLancamentoBean.lancamento.dataVencimento}"
-					pattern="dd/MM/yyyy" readonlyInput="true" />
+					pattern="dd/MM/yyyy" readonlyInput="true" validator="diasUteis" />
 	
 				<p:outputLabel value="Data de pagamento" for="dataPagamento" />
 				<p:calendar id="dataPagamento" value="#{cadastroLancamentoBean.lancamento.dataPagamento}"
