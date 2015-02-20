@@ -22,6 +22,9 @@
 			<p:messages/>
 			
 			<p:panelGrid columns="2">
+				
+				<p:outputLabel value="#{cadastroLancamentoBean.lancamento.descricao}"/>
+				<p:spacer></p:spacer>
 			
 				<p:outputLabel value="Tipo" for="tipo" />
 				<p:selectOneRadio id="tipo" value="#{cadastroLancamentoBean.lancamento.tipo}">
@@ -63,6 +66,7 @@
 								<p:commandButton value="Salvar" oncomplete="tratarInclusao(args)"
 									action="#{cadastroLancamentoBean.salvar}" update=":frm panelEditar" />
 								<p:commandButton value="Fechar" onclick="PF('editarDialog').hide()" type="button" />
+								<p:commandButton value="Teste" onclick="PF('testeDialog').show()" type="button" />
 							</h:panelGroup>
 						</p:column>
 					</p:row>
@@ -82,5 +86,21 @@
 	</h:form>
 
 </p:dialog>
+
+<p:dialog id="teste" widgetVar="testeDialog" header="Teste" modal="true" resizable="false">
+	<h:form id="frmTeste">
+		<h:panelGrid id="panelTeste" columns="2">
+			<p:outputLabel value="Nome" for="nome" />
+			<p:selectOneMenu id="nome" value="#{cadastroLancamentoBean.lancamento.descricao}">
+				<f:selectItem itemLabel="Nome1" itemValue="Nome1" />
+				<f:selectItem itemLabel="Nome2" itemValue="Nome2" />
+				<f:selectItem itemLabel="Nome3" itemValue="Nome3" />
+				<f:selectItem itemLabel="Nome4" itemValue="Nome4" />
+			</p:selectOneMenu>
+			<p:commandButton value="Fechar" onclick="PF('testeDialog').hide()" type="button" />
+		</h:panelGrid>	
+	</h:form>
+</p:dialog>
+
 
 </html>

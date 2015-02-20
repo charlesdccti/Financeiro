@@ -87,5 +87,5 @@ public class CadastroLancamentoBean implements Serializable {
 	public List<String> pesquisarDescricoes(String descricao) {
 		return this.lancamentos.descricoesQueContem(descricao);
 	}
-
+	
 }

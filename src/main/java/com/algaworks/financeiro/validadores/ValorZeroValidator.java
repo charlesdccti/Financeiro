@@ -19,7 +19,7 @@ public class ValorZeroValidator implements Validator {
 		BigDecimal valor = (BigDecimal) value;
 		
 		if (valor.compareTo(BigDecimal.ZERO) <= 0) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_FATAL, "O valor deve ser maior que 0 (zero).", ""));	
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "O valor deve ser maior que 0 (zero).", ""));	
 		}
 
 	}
